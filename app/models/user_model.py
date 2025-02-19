@@ -15,3 +15,16 @@ class User:
             if user["id"] == user_id:
                 return user
         return None
+    
+    @classmethod
+    def store(cls, data):
+
+        new_user = {
+            "id": len(cls.users) + 1,
+            "name": data["name"],
+            "email": data["email"]
+        }
+
+        cls.users.append(new_user)
+        
+        return cls.users

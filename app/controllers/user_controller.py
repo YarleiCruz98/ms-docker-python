@@ -17,3 +17,24 @@ def get_user_by_id(user_id):
             usuarios = User.get_user_by_id(user_id)
         )
     ) 
+
+def store():
+    data = request.get_json()
+
+    name = data.get("name", "")
+    email = data.get("email", "")
+
+    if not name or not email:
+        return make_response(
+        jsonify(
+            mensagem = "error",
+            usuarios = "Os campos 'name' e 'email' são obrigatórios e não podem estar vazios."
+        ), 400
+    )         
+
+    return make_response(
+        jsonify(
+            mensagem = "user salvo com sucesso",
+            usuarios = User.store(data)
+        )
+    ) 
