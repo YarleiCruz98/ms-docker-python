@@ -1,8 +1,9 @@
-version: '3'
+version: '3.8'
+
 services:
   web:
     build:
-      context: . 
+      context: .
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
@@ -11,3 +12,24 @@ services:
     environment:
       FLASK_APP: run.py
       FLASK_ENV: development
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: senha_segura
+      DB_NAME: minha_db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: senha_segura
+      MYSQL_DATABASE: minha_db
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha_usuario
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  mysql_data:
